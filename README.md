@@ -1,10 +1,8 @@
-# Emosic : Music player using emotion detection
-
-## `left` jjj
+# `Emosic` : Music player using emotion detection
 
 <img align="left" width="100" height="100" src="https://user-images.githubusercontent.com/24850323/36073983-4287f77a-0f07-11e8-9bb5-e3644e575de6.png">
 
- `[Hacking @ HackBeanPot2018](https://hackbeanpot.com/)`
+ [`Hacking @ HackBeanPot2018`](https://hackbeanpot.com/)
 >  Team members : [Karan Tyagi](https://github.com/KaranTyagi/) | [Hitesh Verma](https://github.com/Hitesh1912/) 
 
 #
