@@ -7,9 +7,11 @@ Hacking @ [HackBeanPot2018](https://hackbeanpot.com/)
 Team : [Karan Tyagi](https://github.com/KaranTyagi/)   |   [Hitesh Verma](https://github.com/Hitesh1912/) 
 
 #
-<br>
+
+
 `Visit us in Section 2 to know more about this awesome project !`
-<br>
+
+
 * Playing songs based on a person's mood in near-real time
 * Music Player implemented in Python 3.6
 * Used Microsoft's Azure Emotional Detection API for emotion detection
