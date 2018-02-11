@@ -1,4 +1,4 @@
-# Emosic
+# Emosic : Music player service using emotion detection
 Playing songs based on a person's mood in near-real time
 
 ##
