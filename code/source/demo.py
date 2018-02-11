@@ -210,8 +210,8 @@ def find_emotions(path):
         else:
             ans['answer'] ='happy'
             print('\t >> I think you like this artist.')
+            # time.sleep(4) # happy song gets extended window of +4 sec, no processing till then
             #frame_num+=1
-        time.sleep(1)
     except Exception as e:
         print('Error:')
         print(e)
@@ -227,37 +227,34 @@ def playvideo():
         rval = False
 
     img_counter = 1
-    timer = 1
+    timer = 0
+    processed = 0
     #print('\n\tHappiness'.ljust(18)+'Surprise'.ljust(18)+'Neutral'.ljust(18)+'Sadness'.ljust(18)+'Disgust'.ljust(18)+'Anger'.ljust(18)+'Contempt'.ljust(18)+'Fear'.ljust(18))
     while rval:
         cv2.imshow("preview", frame)
         rval, frame = vc.read()
         img_name = "img_frame{}.jpg".format(img_counter)
-
         # print("Created img_frame{}.jpg".format(img_counter))
         key = cv2.waitKey(25) # 1000/25 = 40 FPS
         if timer % 40 == 0:
-            print('Time :  {}'.format(timer / 40), end='\r')
+            print('Tip :  {}'.format(4-(timer / 40)), end='\r')
 
-        # print(type(frame))
-
-        # start processing the image emotions
+        # start processing the image emotions when timer is
         #if
-        if timer / 40 == 3 :
+        if timer / 40 == 4 :
             cv2.imwrite(img_name, frame)
+            processed+=1
             find_emotions(img_name)
-            #key = cv2.waitKey(50) # milliseconds
+            key = cv2.waitKey(50) # milliseconds
             timer=1
-
             if os.path.isfile(img_name):
                 os.remove(img_name)
+                continue
                 # deleting the image after processing it
                 #print("Deleted img_frame{}.jpg".format(i))
             else: ## Show an error ##
                 print("Error: %s file not found" % myfile)
-
-            continue
-
+                continue
         timer+=1
 
         # take less frames
@@ -269,10 +266,12 @@ def playvideo():
         # this can be put in a try catch box
         ## if file exists, delete it ##
         img_counter+=1
-        if key == 27: # exit on ESC
+
+        if key == 27 or processed == 18: # exit on ESC
             break
 
     cv2.destroyWindow("preview")
+    print('API calls made or number frames processed for emotion detection : {}'.format(processed))
     vc.release()
 
     #print("\n\n\tAll images deleted. Memory freed. Enjoy Lappy. ;)")
@@ -282,8 +281,8 @@ def backgroundmusic():
     global _songsindex
     _songsindex = 0   # random number can also be used
     filename = (_songs[_songsindex ])
-
-    print(filename)
+    #print(filename)
+    print("Now playing : {}".format(_songsindex))
     playmusic(filename)
 
 # playvideo()
@@ -301,7 +300,6 @@ def printit():
 if __name__ == '__main__':
     #start = time.time()
     #printit()
-    print('\n---- Freeze ur expressions near timer : 10 ------\n')
     p1 = Thread(target=backgroundmusic)
     p1.start()
     p2 = Thread(target=playvideo)
