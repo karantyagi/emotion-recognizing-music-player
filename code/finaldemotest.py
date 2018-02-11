@@ -19,13 +19,14 @@ from threading import Thread
 #### Update or verify the following values. ###
 ###############################################
 
-_songs = ['mu/romantic.mp3','mu/joy.mp3', 'mu/relax.mp3', 'mu/rock.mp3']
+#_songs = ['mu/romantic.mp3','mu/joy.mp3', 'mu/relax.mp3', 'mu/rock.mp3']
+_songs = ['mu/romantic.mp3','mu/romantic.mp3','mu/romantic.mp3','mu/relax.mp3','mu/relax.mp3','mu/relax.mp3','mu/rock.mp3','mu/rock.mp3','mu/rock.mp3']
 _currently_playing_song = None
-##############################################################################################
+_songsindex = 0
 ans = {}
 ans['answer'] = 'happy'
-
 ##############################################################################################
+
 def playsound(soundfile):
     """Play sound through default mixer channel in blocking manner.
        This will load the whole sound into memory before playback
@@ -38,7 +39,7 @@ def playsound(soundfile):
     sound.play()
     while pygame.mixer.get_busy():
         print("Playing...")
-        clock.tick(1000)
+        #clock.tick(1000)
 
 def playmusic(soundfile):
     """Stream music with mixer.music module in blocking manner.
@@ -47,32 +48,22 @@ def playmusic(soundfile):
     #: No need for global declaration to just read value
     #pygame.init()
     #pygame.mixer.init()
-    clock = pygame.time.Clock()
+    #clock = pygame.time.Clock()
     pygame.mixer.music.load(soundfile)
     pygame.mixer.music.play()
+    time.sleep(10)
+
     while pygame.mixer.music.get_busy():
-    	#print "Playing... "
-        #print("duration",pygame.mixer.music.get_pos())
 
-       	#if not keyboard.is_pressed('n'):
-        	# if(pygame.mixer.music.get_volume() < 1.0):
-        	# 	i +=0.1
-        	# 	pygame.mixer.music.set_volume(i)
-        #if pygame.mixer.music.get_pos()>15000:
-
-        ##############################################################################################
-        ### Check
-        print(ans['answer'])
         if ans['answer'] == 'sad':
-        #############################################################################################
             pygame.mixer.music.stop()
-            print("SAD ....  new song coming for you")
+            print("Try new Genre as you dont like this song !")
+            print("It will start in 2 sec")
+            #time.sleep(2)
+            play_next_genre()
+        else:
             play_next_song()
-            time.sleep(10)
-        #play_a_different_song()
 
-
-        clock.tick(1000)
 
 
 def stopmusic():
@@ -105,15 +96,40 @@ def play_a_different_song():
     pygame.mixer.music.play()
 
 def play_next_song():
-	global _songs
-	_songs = _songs[1:] + [_songs[0]] # move current song to the back of the list
-	pygame.mixer.music.load(_songs[0])
-	pygame.mixer.music.play()
+    global _songs
+    global _songsindex
+    if _songsindex == 8:
+        _songsindex = 0
+    else:
+        _songsindex =_songsindex+1
+    pygame.mixer.music.load(_songs[_songsindex])
+    print("Now playing song number : {}".format(_songsindex))
+    pygame.mixer.music.play()
+    time.sleep(15)
+
+
+def play_next_genre():
+    global _songs
+    global _songsindex
+    _songsindex+=3;
+    if _songsindex > 8:
+        _songsindex = 0
+    else:
+        _songsindex+=1
+    pygame.mixer.music.load(_songs[_songsindex])
+    print("Now playing song number : {}".format(_songsindex))
+    pygame.mixer.music.play()
+    time.sleep(15)
+
 
 
 ################################################
 # Replace the subscription_key string value with your valid subscription key.
 subscription_key = 'a964c99ef5a944d99e2d50e1fea958d0'
+
+# other keys for demo:
+
+
 
 # Replace or verify the region.
 #
@@ -141,11 +157,8 @@ params = {
 
 def find_emotions(path):
     # pathToFileInDisk = r'C:\Users\girls.jpg'
-    ##############################################################################################
-    ### Check
     global ans
-    ans['answer'] = 'happy'
-    ##############################################################################################
+    #ans['answer'] = 'happy'
 
     pathToFileInDisk = r'C:\Users\Karan Tyagi\Desktop\add to github\0 - hackbeanspot\code\{}'.format(path)
     with open( pathToFileInDisk, 'rb' ) as f:
@@ -167,34 +180,19 @@ def find_emotions(path):
             face['faceAttributes']['emotion']['anger'])
 
             if result > face['faceAttributes']['emotion']['happiness']:
-                ##############################################################################################
-                ### Check
                 ans['answer'] = 'sad'
-                #print('sad')
-
             else:
                 ans['answer'] ='happy'
-                #print('happy')
-                ##############################################################################################
-
 
             # print(sum)
-            print('\t{}'.format(face['faceAttributes']['emotion']['happiness']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['surprise']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['neutral']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['sadness']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['disgust']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['anger']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['contempt']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['fear']).ljust(18)+"   "+ans['answer'])
+            #print('\t{}'.format(face['faceAttributes']['emotion']['happiness']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['surprise']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['neutral']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['sadness']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['disgust']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['anger']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['contempt']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['fear']).ljust(18)+"   "+ans['answer'])
+            print('\t\t\t\t---------- '+ ans['answer'])
             frame_num+=1
-
-        # print(type(parsed[0]))
-        #print(len(parsed))
 
     except Exception as e:
         print('Error:')
         print(e)
 
-    '''if response is not None:
-        # Load the original image, fetched from the URL
-        data8uint = np.fromstring( data, np.uint8 ) # Convert string to an unsigned int array
-        img = cv2.cvtColor( cv2.imdecode( data8uint, cv2.IMREAD_COLOR ), cv2.COLOR_BGR2RGB )
-        cv2.imshow('preview',img)
-        cv2.waitKey()'''
 
 def playvideo():
     cv2.namedWindow("preview")
@@ -206,24 +204,39 @@ def playvideo():
         rval = False
 
     img_counter = 1
-
-    print('\n\tHappiness'.ljust(18)+'Surprise'.ljust(18)+'Neutral'.ljust(18)+'Sadness'.ljust(18)+'Disgust'.ljust(18)+'Anger'.ljust(18)+'Contempt'.ljust(18)+'Fear'.ljust(18))
+    timer = 1
+    #print('\n\tHappiness'.ljust(18)+'Surprise'.ljust(18)+'Neutral'.ljust(18)+'Sadness'.ljust(18)+'Disgust'.ljust(18)+'Anger'.ljust(18)+'Contempt'.ljust(18)+'Fear'.ljust(18))
     while rval:
         cv2.imshow("preview", frame)
         rval, frame = vc.read()
         img_name = "img_frame{}.jpg".format(img_counter)
-        cv2.imwrite(img_name, frame)
 
         # print("Created img_frame{}.jpg".format(img_counter))
+        key = cv2.waitKey(50) # 1000/50 = 20 FPS
+        if timer % 20 == 0:
+            print('Time :  {}'.format(timer / 20), end='\r')
 
         # print(type(frame))
 
         # start processing the image emotions
-        if keyboard.is_pressed('p'):
-            find_emotions(img_name)
-            key = cv2.waitKey(30) # milliseconds
-        else:
-            key = cv2.waitKey(10) # milliseconds
+        #if
+        if timer / 20 == 10 :
+            cv2.imwrite(img_name, frame)
+            #find_emotions(img_name)
+            #key = cv2.waitKey(50) # milliseconds
+            timer=1
+
+            if os.path.isfile(img_name):
+                os.remove(img_name)
+                # deleting the image after processing it
+                #print("Deleted img_frame{}.jpg".format(i))
+            else: ## Show an error ##
+                print("Error: %s file not found" % myfile)
+
+            continue
+
+        timer+=1
+
         # take less frames
         # end processing this frame
 
@@ -233,47 +246,39 @@ def playvideo():
         # this can be put in a try catch box
         ## if file exists, delete it ##
         img_counter+=1
-
         if key == 27: # exit on ESC
             break
 
     cv2.destroyWindow("preview")
     vc.release()
 
-    for i in range(1,img_counter):
-        ## if file exists, delete it ##
-        if os.path.isfile("img_frame{}.jpg".format(i)):
-            os.remove("img_frame{}.jpg".format(i))
-            # deleting the image after processing it
-            #print("Deleted img_frame{}.jpg".format(i))
-        else: ## Show an error ##
-            print("Error: %s file not found" % myfile)
-
-    print("\n\n\tAll images deleted. Memory freed. Enjoy Lappy. ;)")
+    #print("\n\n\tAll images deleted. Memory freed. Enjoy Lappy. ;)")
 
 def backgroundmusic():
     initMixer()
-    #filename = '/MSCS/Projects/emosic/romantic.mp3'
-    filename = random.choice(_songs)
+    global _songsindex
+    _songsindex = 0   # random number can also be used
+    filename = (_songs[_songsindex ])
+
     print(filename)
-    #flag = keyboard.is_pressed('n')
-    #_currently_playing_song = None
-    #play_next_song(_songs)
     playmusic(filename)
-    #play_a_different_song()
-    print("Done")
-    #if __name__ == '__main__':
-    # end of try block
-
-
-
 
 # playvideo()
 # backgroundmusic()
 
+def printit():
+    # run your code
+    print('Time :  ', end='\r')
+    threading.Timer(1.0, printit).start()
+    end = time.time()
+    elapsed = int(end - start)
+    print('Time :  {}'.format(elapsed), end='\r')
 
 
 if __name__ == '__main__':
+    #start = time.time()
+    #printit()
+    print('\n---- Freeze ur expressions near timer : 10 ------\n')
     p1 = Thread(target=backgroundmusic)
     p1.start()
     p2 = Thread(target=playvideo)
