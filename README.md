@@ -1,5 +1,8 @@
 # Emosic
-## Playing songs based on a person's mood in near-real time
+Playing songs based on a person's mood in near-real time
+
+##
+
 
 * chrome extension
 * info page with my information for filling out
