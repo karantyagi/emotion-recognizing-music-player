@@ -6,7 +6,7 @@ Hacking @ [HackBeanPot2018](https://hackbeanpot.com/)
 <br>
 Team : [Karan Tyagi](https://github.com/KaranTyagi/)   |   [Hitesh Verma](https://github.com/Hitesh1912/) 
 <br>
- `built in 24 hours`
+ ` __built in 24 hours__`
 
 #
 
