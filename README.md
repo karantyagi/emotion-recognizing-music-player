@@ -5,8 +5,8 @@
 * Used Microsoft's Azure Emotional Detection API for emotion detection
 
 #
- > 
- >  ![Hacking at HackBeanPot2018](https://hackbeanpot.com/)
+>  [Hacking @ HackBeanPot2018](https://hackbeanpot.com/)
+>  Team members : [Karan Tyagi](https://github.com/KaranTyagi/) | [Hitesh Verma](https://hackbeanpot.com/) 
 
 ## Demo
 
