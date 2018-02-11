@@ -30,3 +30,7 @@ Both info webapp and script need to run automatically.
 - user should be able to view his info which he has saved once, update options available
 - data per user must be saved on server and fetched to client on logging in
 - materialUI - for admin panel to measure stats like no of users, and visits etc etc 
+
+## Demo
+
+![demo](https://user-images.githubusercontent.com/24850323/36073460-ec17a9ec-0efe-11e8-87fa-74e0b761c397.jpg)
