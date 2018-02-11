@@ -15,17 +15,27 @@ import threading
 from threading import Thread
 # from multiprocessing import Process
 
+
+
 ###############################################
 #### Update or verify the following values. ###
 ###############################################
 
 #_songs = ['mu/romantic.mp3','mu/joy.mp3', 'mu/relax.mp3', 'mu/rock.mp3']
-_songs = ['mu/romantic.mp3','mu/romantic.mp3','mu/romantic.mp3','mu/relax.mp3','mu/relax.mp3','mu/relax.mp3','mu/rock.mp3','mu/rock.mp3','mu/rock.mp3']
+_songs = ['mu/0.mp3','mu/1.mp3','mu/2.mp3','mu/3.mp3','mu/4.mp3','mu/5.mp3','mu/6.mp3','mu/7.mp3','mu/8.mp3']
 _currently_playing_song = None
 _songsindex = 0
 ans = {}
 ans['answer'] = 'happy'
+ans['flag'] = False
 ##############################################################################################
+
+import ctypes  # An included library with Python install.
+def Mbox(title, text, style):
+    return ctypes.windll.user32.MessageBoxW(0, text, title, style)
+
+#Mbox('Analyzing your emotion', 'Do you like this song ?', 0)
+
 
 def playsound(soundfile):
     """Play sound through default mixer channel in blocking manner.
@@ -45,25 +55,26 @@ def playmusic(soundfile):
     """Stream music with mixer.music module in blocking manner.
        This will stream the sound from disk while playing.
     """
+    global ans
     #: No need for global declaration to just read value
     #pygame.init()
     #pygame.mixer.init()
     #clock = pygame.time.Clock()
     pygame.mixer.music.load(soundfile)
     pygame.mixer.music.play()
-    time.sleep(10)
-
     while pygame.mixer.music.get_busy():
+        # print(pygame.mixer.music.get_pos())
+        if pygame.mixer.music.get_pos() >= 18000:
+            #print(pygame.mixer.music.get_pos())
+            play_next_song() # if it happy
+            #print("You are loving this song, try this song now from the same singer !")
 
-        if ans['answer'] == 'sad':
+        if ans['answer'] == 'sad' and ans['flag'] == True:
             pygame.mixer.music.stop()
-            print("Try new Genre as you dont like this song !")
-            print("It will start in 2 sec")
+            #print("You don't seem to like this song, try song from a new singer !")
             #time.sleep(2)
+            ans['flag'] = False
             play_next_genre()
-        else:
-            play_next_song()
-
 
 
 def stopmusic():
@@ -103,9 +114,9 @@ def play_next_song():
     else:
         _songsindex =_songsindex+1
     pygame.mixer.music.load(_songs[_songsindex])
-    print("Now playing song number : {}".format(_songsindex))
+    print("Now playing : {}".format(_songsindex))
     pygame.mixer.music.play()
-    time.sleep(15)
+    #print(pygame.mixer.music.get_pos())
 
 
 def play_next_genre():
@@ -114,19 +125,17 @@ def play_next_genre():
     _songsindex+=3;
     if _songsindex > 8:
         _songsindex = 0
-    else:
-        _songsindex+=1
     pygame.mixer.music.load(_songs[_songsindex])
-    print("Now playing song number : {}".format(_songsindex))
+    print("Now playing : {}".format(_songsindex))
     pygame.mixer.music.play()
-    time.sleep(15)
 
 
 
-################################################
+###############################################
+#### Update krys ###
+###############################################################################################
 # Replace the subscription_key string value with your valid subscription key.
 subscription_key = 'a964c99ef5a944d99e2d50e1fea958d0'
-
 # other keys for demo:
 
 
@@ -158,6 +167,7 @@ params = {
 def find_emotions(path):
     # pathToFileInDisk = r'C:\Users\girls.jpg'
     global ans
+    #global flag
     #ans['answer'] = 'happy'
 
     pathToFileInDisk = r'C:\Users\Karan Tyagi\Desktop\add to github\0 - hackbeanspot\code\{}'.format(path)
@@ -171,7 +181,9 @@ def find_emotions(path):
         # print ('Response:')
         parsed = json.loads(response.text)
         # print (json.dumps(parsed, sort_keys=True, indent=2))
-        frame_num = 1;
+        frame_num = 1
+        sad_count = 0
+        happy_count = 0
         for face in parsed:
             #print(' Frame {} :\t'.format(frame_num),face['faceAttributes']['emotion'])
             #print(' Smile {} :\t'.format(fno),face['faceAttributes']['smile'])
@@ -179,16 +191,27 @@ def find_emotions(path):
             face['faceAttributes']['emotion']['disgust'] + face['faceAttributes']['emotion']['contempt'] +
             face['faceAttributes']['emotion']['anger'])
 
+            # print("- - - - - - - - - - Analyzing your emotions - - - - - - - - - - -");
+
             if result > face['faceAttributes']['emotion']['happiness']:
-                ans['answer'] = 'sad'
+                sad_count+=1
+                # Mbox('Analyzing your emotions', 'Don\'t be sad ? I am here to help. I \'ll change the song for you.', 0)
             else:
-                ans['answer'] ='happy'
+                happy_count+=1
+                # Mbox('Analyzing your emotions', 'I am glad you are happy . I think you like this artist.', 0)
 
             # print(sum)
             #print('\t{}'.format(face['faceAttributes']['emotion']['happiness']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['surprise']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['neutral']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['sadness']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['disgust']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['anger']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['contempt']).ljust(18)+'{}'.format(face['faceAttributes']['emotion']['fear']).ljust(18)+"   "+ans['answer'])
-            print('\t\t\t\t---------- '+ ans['answer'])
-            frame_num+=1
-
+        if sad_count > happy_count:
+            ans['answer'] = 'sad'
+            ans['flag'] = True
+            print('\t >> Don\'t be sad ? I am here to help. I \'ll change the song for you.')
+            # Mbox('Analyzing your emotions', 'Don\'t be sad ? I am here to help. I \'ll change the song for you.', 0)
+        else:
+            ans['answer'] ='happy'
+            print('\t >> I think you like this artist.')
+            #frame_num+=1
+        time.sleep(1)
     except Exception as e:
         print('Error:')
         print(e)
@@ -212,17 +235,17 @@ def playvideo():
         img_name = "img_frame{}.jpg".format(img_counter)
 
         # print("Created img_frame{}.jpg".format(img_counter))
-        key = cv2.waitKey(50) # 1000/50 = 20 FPS
-        if timer % 20 == 0:
-            print('Time :  {}'.format(timer / 20), end='\r')
+        key = cv2.waitKey(25) # 1000/25 = 40 FPS
+        if timer % 40 == 0:
+            print('Time :  {}'.format(timer / 40), end='\r')
 
         # print(type(frame))
 
         # start processing the image emotions
         #if
-        if timer / 20 == 10 :
+        if timer / 40 == 3 :
             cv2.imwrite(img_name, frame)
-            #find_emotions(img_name)
+            find_emotions(img_name)
             #key = cv2.waitKey(50) # milliseconds
             timer=1
 
