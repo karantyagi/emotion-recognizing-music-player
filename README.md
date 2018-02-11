@@ -6,14 +6,8 @@ Hacking @ [HackBeanPot2018](https://hackbeanpot.com/)
 <br>
 Team : [Karan Tyagi](https://github.com/KaranTyagi/)   |   [Hitesh Verma](https://github.com/Hitesh1912/) 
 <br>
-<br>
-`Feel free to drop by to checkout our project or to know more about it !`
 
 #
-
-
-
-
 
 * Playing songs based on a person's mood in near-real time
 * Music Player implemented in Python 3.6
