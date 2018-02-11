@@ -1,5 +1,7 @@
 # Emosic : Music player using emotion detection
 
+### Hacking at ![#HackBeabPot2018] (https://hackbeanpot.com/)
+
 * Playing songs based on a person's mood in near-real time
 * Music Player implemented in Python 3.6
 * Used Microsoft's Azure Emotional Detection API for emotion detection
