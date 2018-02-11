@@ -8,6 +8,8 @@ Team : [Karan Tyagi](https://github.com/KaranTyagi/)   |   [Hitesh Verma](https:
 
 #
 
+`Visit us in Section 2 to know more about this awesome project !`
+
 * Playing songs based on a person's mood in near-real time
 * Music Player implemented in Python 3.6
 * Used Microsoft's Azure Emotional Detection API for emotion detection
