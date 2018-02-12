@@ -17,3 +17,11 @@ Team : [Karan Tyagi](https://github.com/KaranTyagi/)   |   [Hitesh Verma](https:
 ## Demo
 
 ![demo](https://user-images.githubusercontent.com/24850323/36073460-ec17a9ec-0efe-11e8-87fa-74e0b761c397.jpg)
+
+
+## My trial :
+
+Student account, valid for 6 months from 11th Feb,, 2018.
+---------------------------------------------------------
+https://developer.affectiva.com/affectiva-student-sdk-license-agreement/
+
