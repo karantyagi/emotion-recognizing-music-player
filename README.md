@@ -6,7 +6,6 @@ Hacking @ [HackBeanPot2018](https://hackbeanpot.com/)
 <br>
 Team : [Karan Tyagi](https://github.com/KaranTyagi/)   |   [Hitesh Verma](https://github.com/Hitesh1912/) 
 <br>
- ` built in 24 hours `
 
 #
 
@@ -21,7 +20,7 @@ Team : [Karan Tyagi](https://github.com/KaranTyagi/)   |   [Hitesh Verma](https:
 
 ## My trial :
 
-Student account, valid for 6 months from 11th Feb,, 2018.
+Student account, valid for 6 months from 11th Feb, 2018.
 ---------------------------------------------------------
 https://developer.affectiva.com/affectiva-student-sdk-license-agreement/
 
