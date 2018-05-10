@@ -12,7 +12,7 @@ import keyboard
 ###############################################
 
 # Replace the subscription_key string value with your valid subscription key.
-subscription_key = 'a964c99ef5a944d99e2d50e1fea958d0'
+subscription_key = '********************************'
 
 # Replace or verify the region.
 #
